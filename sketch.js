@@ -1,8 +1,5 @@
 //The following sketch was made possible by https://www.londonair.org.uk/LondonAir/Default.aspx
 
-let groupsJSON;
-let hourlyJSON;
-
 /*
 
 http://api.erg.kcl.ac.uk/AirQuality/Information/AirPollutionGuide/Json
@@ -12,6 +9,9 @@ http://api.erg.kcl.ac.uk/AirQuality/Information/Groups/Json
 http://api.erg.kcl.ac.uk/AirQuality/Hourly/MonitoringIndex/GroupName={GroupName}/Json
 
 */
+
+let groupsJSON;
+let hourlyJSON;
 
 //Using the group name "lewisham" for now
 function preload(){
@@ -25,11 +25,13 @@ function setup(){
     createCanvas(500,500);
 }
 
-let test= "HourlyAirQualityIndex.LocalAuthority.Site[0].Species[0].@AirQualityIndex"
+//This is a workaround property names beginning with @, spent 2 hours on this brickwall but storing it as a string works in JS
+let theData= 'HourlyAirQualityIndex'
+let groupName = '@GroupName'
 
 
 function draw(){
-    let varTest = hourlyJSON
+    let varTest = hourlyJSON.HourlyAirQualityIndex[groupName]
     
     console.log(varTest)
 }
