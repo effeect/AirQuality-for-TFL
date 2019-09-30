@@ -1,6 +1,6 @@
 //The following sketch was made possible by https://www.londonair.org.uk/LondonAir/Default.aspx
 
-/*
+/* List of potenial websites API links
 
 http://api.erg.kcl.ac.uk/AirQuality/Information/AirPollutionGuide/Json
 
@@ -10,28 +10,50 @@ http://api.erg.kcl.ac.uk/AirQuality/Hourly/MonitoringIndex/GroupName={GroupName}
 
 */
 
+//Groups List
 let groupsJSON;
-let hourlyJSON;
 
-//Using the group name "lewisham" for now
-function preload(){
-    let url = "http://api.erg.kcl.ac.uk/AirQuality/Hourly/MonitoringIndex/GroupName=lewisham/Json"
+//Arrays for storing the objects from JSON so we can modify and utlise the data if need be
+let groups = [];
+let AirQuality = [];
+
+function preload(){ //Preloading only contains JSON related function. We need to make sure it's ready before the sketch begins
     
-    hourlyJSON = loadJSON(url)
+    const lewishamURL = "http://api.erg.kcl.ac.uk/AirQuality/Hourly/MonitoringIndex/GroupName=lewisham/Json"
+    
+    //List of groups
+    const groupsURL = "http://api.erg.kcl.ac.uk/AirQuality/Information/Groups/Json"
+    
+    //Loading JSON Scripts
+    hourlyJSON = loadJSON(lewishamURL)
+    groupsJSON = loadJSON(groupsURL)
     
 }
 
 function setup(){
-    createCanvas(500,500);
+    createCanvas(1000,1000);
+    background(0);
+    
+    groupList = groupsJSON.Groups.Group.length //List of groups
+    
+    for(var i = 0; i < groupList; i++)
+        {
+            groups[i] = groupsJSON.Groups.Group[i]
+            console.log(groups)
+            
+            let groupNameConcat = "@GroupName"
+            let GroupNameTemp = groups[i][groupNameConcat] //THIS WORKS!
+            console.log(GroupNameTemp)
+            
+            AirQuality = hourlyJSON.HourlyAirQualityIndex[GroupNameTemp]
+        }
 }
 
-//This is a workaround property names beginning with @, spent 2 hours on this brickwall but storing it as a string works in JS
-let theData= 'HourlyAirQualityIndex'
-let groupName = '@GroupName'
-
-
 function draw(){
-    let varTest = hourlyJSON.HourlyAirQualityIndex[groupName]
-    
-    console.log(varTest)
+    fill(255,255,255)
+    for(var i = 0; i < groupList; i++)
+        {
+            fill(255,255,0)
+            rect(0 + 15*i,500,15,15)
+        }
 }
