@@ -55,12 +55,27 @@ function setup(){
             
             viewInfoArray[i] = loadJSON(changingURL) //Puts the group names into an array of objects where we can mantiuplate the data
             
-            console.log(viewInfoArray)
+//            console.log(viewInfoArray)
             
             //Find the length of the species, site and local authority and throw that into the mix
             //[8].HourlyAirQualityIndex.LocalAuthority[""0""].Site[""0""].Species[""0""][""@AirQualityIndex""]
             
         }
+    
+    for(var i = 0; i < viewInfoArray.length; i++)
+        {
+//            console.log(viewInfoArray[i])
+//
+//            console.log(viewInfoArray)
+        }
+    
+    let textTest = 'HourlyAirQualityIndex'
+    console.log(viewInfoArray[0])
+    console.log(viewInfoArray[0])
+    
+    let testVar = viewInfoArray[0]['HourlyAirQualityIndex']
+    
+    console.log(testVar)
 }
 
 function draw(){
